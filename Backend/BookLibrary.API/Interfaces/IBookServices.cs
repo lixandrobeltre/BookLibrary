@@ -1,11 +1,9 @@
-﻿using BookLibrary.API.Data.Models;
+﻿using BookLibrary.API.DTOs;
 
-namespace BookLibrary.API.Interfaces
+namespace BookLibrary.API.Interfaces;
+
+public interface IBookServices
 {
-    public interface IBookServices
-    {
-        Task<IEnumerable<Book>> SearchAsync(string? author, string? isbn, string? ownershipStatus, int page, int pageSize);
-        Task<int> CountAsync(string? author, string? isbn, string? ownershipStatus);
-        Task AddAsync(Book book);
-    }
+    Task<(IEnumerable<BookDto> Results, int Total)> SearchAsync(SearchDto search);
+    Task AddAsync(BookDto book);
 }
