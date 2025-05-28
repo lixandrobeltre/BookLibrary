@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+const string CORS_POLICY_NAME = "ClientCorsPolicy";
 
 var connectionStringBuilder = new SqlConnectionStringBuilder(builder.Configuration.GetConnectionString("BLDbConnection"))
 {
@@ -18,26 +19,21 @@ builder.Services.AddDbContext<BLContext>(op => op.UseSqlServer(connectionStringB
 builder.Services.AddScoped<IBookServices, BookServices>();
 builder.Services.AddEndpointsApiExplorer();
 
-var dbUser = Environment.GetEnvironmentVariable("bl_db_user");
-
-//builder.Configuration.AddUserSecrets<Program>();
-
-var FE_CORS = "fe_cors_local"; //for testing FE local
+var allowedOrigins = builder.Configuration.GetSection("AllowedOrigins").Get<string[]>();
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy(name: FE_CORS,
-        policy =>
-        {
-            policy.WithOrigins("http://localhost:5173")
-                  .AllowAnyHeader()
-                  .AllowAnyMethod();
-        });
+    options.AddPolicy(CORS_POLICY_NAME, policy =>
+    {
+        policy.WithOrigins(allowedOrigins!)
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
 });
 
 var app = builder.Build();
 
-app.UseCors(FE_CORS);
+app.UseCors(CORS_POLICY_NAME);
 
 app.UseHttpsRedirection();
 
