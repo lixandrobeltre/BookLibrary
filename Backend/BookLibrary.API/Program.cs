@@ -9,7 +9,6 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<BLContext>(op => op.UseSqlServer(builder.Configuration.GetConnectionString("BLDbConnection")));
 builder.Services.AddScoped<IBookServices, BookServices>();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
 var FE_CORS = "fe_cors_local"; //for testing FE local
 
@@ -24,14 +23,7 @@ builder.Services.AddCors(options =>
         });
 });
 
-
 var app = builder.Build();
-
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
 
 app.UseCors(FE_CORS);
 
