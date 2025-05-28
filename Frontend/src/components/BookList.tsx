@@ -11,19 +11,6 @@ interface Props {
   readonly books: readonly Book[];
 }
 
-const getStatusLabel = (status: string): string => {
-  switch (status) {
-    case '1':
-      return 'Own';
-    case '2':
-      return 'Love';
-    case '3':
-      return 'Want to Read';
-    default:
-      return 'None';
-  }
-};
-
 export default function BookList({ books }: Props) {
   return (
     <Table>
@@ -32,6 +19,9 @@ export default function BookList({ books }: Props) {
           <TableCell>Title</TableCell>
           <TableCell>Author</TableCell>
           <TableCell>ISBN</TableCell>
+          <TableCell>Type</TableCell>
+          <TableCell>Category</TableCell>
+          <TableCell>Available Copies</TableCell>
           <TableCell>Status</TableCell>
         </TableRow>
       </TableHead>
@@ -39,14 +29,16 @@ export default function BookList({ books }: Props) {
         {books.map((book, i) => (
           <TableRow key={i}>
             <TableCell>{book.title}</TableCell>
-            <TableCell>
-              {book.firstName} {book.lastName}
-            </TableCell>
+            <TableCell> {book.firstName} {book.lastName} </TableCell>
             <TableCell>{book.isbn}</TableCell>
-            <TableCell>{getStatusLabel(book.ownershipStatus)}</TableCell>
+            <TableCell>{book.genderType}</TableCell>
+            <TableCell>{book.category}</TableCell>
+            <TableCell>{book.availableCopies}</TableCell>
+            <TableCell>{book.ownershipStatus}</TableCell>
           </TableRow>
         ))}
       </TableBody>
     </Table>
   );
 }
+
