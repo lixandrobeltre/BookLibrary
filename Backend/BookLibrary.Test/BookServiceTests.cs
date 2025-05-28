@@ -3,7 +3,6 @@ using BookLibrary.API.Data.Models;
 using BookLibrary.API.DTOs;
 using BookLibrary.API.Services;
 using Microsoft.EntityFrameworkCore;
-using Moq;
 
 namespace BookLibrary.Test;
 
