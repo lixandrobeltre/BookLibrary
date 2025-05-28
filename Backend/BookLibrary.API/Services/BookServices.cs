@@ -11,7 +11,7 @@ public class BookServices : IBookServices
     private readonly BLContext _context;
     public BookServices(BLContext context) => _context = context;
 
-    public async Task AddAsync(BookDto book)
+    public async Task<Guid> AddAsync(BookDto book)
     {
         var entity = new Book
         {
@@ -30,6 +30,7 @@ public class BookServices : IBookServices
 
         _context.Books.Add(entity);
         await _context.SaveChangesAsync();
+        return entity.RowId;
     }
 
     public async Task<(IEnumerable<BookDto> Results, int Total)> SearchAsync(SearchDto search)

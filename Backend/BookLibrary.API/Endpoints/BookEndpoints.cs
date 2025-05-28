@@ -28,8 +28,8 @@ public static class BookEndpoints
                 if (string.IsNullOrWhiteSpace(bookDto.Title) || string.IsNullOrWhiteSpace(bookDto.FirstName) || string.IsNullOrWhiteSpace(bookDto.LastName))
                     return Results.BadRequest("Title, FirstName, and LastName are required.");
 
-                await bookService.AddAsync(bookDto);
-                return Results.Created($"/api/books/{bookDto.RowId}", bookDto);
+                var rowId = await bookService.AddAsync(bookDto);
+                return Results.Created($"/api/books/{rowId}", bookDto);
             }
             catch (Exception ex)
             {

@@ -5,5 +5,5 @@ namespace BookLibrary.API.Interfaces;
 public interface IBookServices
 {
     Task<(IEnumerable<BookDto> Results, int Total)> SearchAsync(SearchDto search);
-    Task AddAsync(BookDto book);
+    Task<Guid> AddAsync(BookDto book);
 }
